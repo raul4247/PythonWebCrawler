@@ -24,4 +24,4 @@ A Simple Python Web Crawler
    e.g: 'page.php'
 
 * already fine reference
-   e.g: https<!-- -->://www.google.com/
+   e.g: https<!-- -->://ww<!-- -->w.goo<!-- -->gle.<!-- -->co<!-- -->m/
