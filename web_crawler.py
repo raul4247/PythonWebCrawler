@@ -16,20 +16,18 @@ def filter_ref(full_url, ref):
     elif ref[:2] == "//" :
         fine_ref = urlparse(full_url).scheme + ":" + ref
    
-    # start with a dot slash './'
+    # starts with a dot slash './'
     # './about.php'
     elif ref[:2] == "./" :
         fine_ref = urlparse(full_url).scheme + "://" + urlparse(full_url).netloc + urlparse(full_url).path + ref[2:]
 
     # starts with a anchor '#'
     # '#sectionB'
-
     elif ref[0] == "#" :
         fine_ref = urlparse(full_url).scheme + "://" + urlparse(full_url).netloc + urlparse(full_url).path + ref
 
     # starts with two dots and slash '../'
     # '../link.html'
-
     elif ref[:3] == "../" :
         fine_ref = urlparse(full_url).scheme + "://" + urlparse(full_url).netloc + "/" + ref
 
@@ -62,7 +60,7 @@ def main():
     for link in soup.find_all('a'):
         fine_ref = filter_ref(first_url, link.get('href'))
         print(fine_ref)
-
+        
 
 if __name__ == "__main__":
     main()
