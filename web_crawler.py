@@ -6,10 +6,6 @@ from urllib.parse import urlparse
 def filter_ref(full_url, ref):
     fine_ref = ""
 
-    # NoneType filtering
-    if ref is None:
-        return ""
-
     # starts with one back slash '/'
     # '/home/login.php'
     if ref[:1] == "/" and ref[:2] != "//" :
@@ -53,7 +49,7 @@ def filter_ref(full_url, ref):
 
 def main():
     #first_url = input("Enter the first url: ")
-    first_url = "http://www.coltec.ufmg.br/coltec-ufmg/"
+    first_url = "http://localhost:8080/"
     print("Looking up for: " + first_url)
     r = requests.get(first_url)
     soup = BeautifulSoup(r.text, 'html.parser')
@@ -65,27 +61,6 @@ def main():
         fine_ref = filter_ref(first_url, link.get('href'))
         print(fine_ref)
         
-
-'''
-    foreach ($linklist as $link) {
-            // If the link isn't already in our crawl array add it, otherwise ignore it.
-            if (!in_array($l, $already_crawled)) {
-                    $already_crawled[] = $l;
-                    $crawling[] = $l;
-                    // Output the page title, descriptions, keywords and URL. This output is
-                    // piped off to an external file using the command line.
-                    echo get_details($l)."\n";
-            }
-        }
-        // Remove an item from the array after we have crawled it.
-        // This prevents infinitely crawling the same page.
-        array_shift($crawling);
-        // Follow each link in the crawling array.
-        foreach ($crawling as $site) {
-            follow_links($site);
-        }
-'''
-
 
 if __name__ == "__main__":
     main()
