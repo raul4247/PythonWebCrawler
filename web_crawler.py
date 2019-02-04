@@ -6,6 +6,10 @@ from urllib.parse import urlparse
 def filter_ref(full_url, ref):
     fine_ref = ""
 
+    # NoneType filtering
+    if ref is None:
+        return ""
+
     # starts with one back slash '/'
     # '/home/login.php'
     if ref[:1] == "/" and ref[:2] != "//" :
@@ -49,7 +53,7 @@ def filter_ref(full_url, ref):
 
 def main():
     #first_url = input("Enter the first url: ")
-    first_url = "http://localhost:8080/"
+    first_url = "http://www.coltec.ufmg.br/coltec-ufmg/"
     print("Looking up for: " + first_url)
     r = requests.get(first_url)
     soup = BeautifulSoup(r.text, 'html.parser')
