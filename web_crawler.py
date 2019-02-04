@@ -1,11 +1,31 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+from collections import deque
+from urllib.request import urlopen
 
+array_links = []
+searched_links = []
+
+def look_up():
+    for link in array_links:
+        r = urlopen(link)
+        r_str = r.read()
+        soup = BeautifulSoup(r_str, 'html.parser')
+
+        for intern_link in soup.find_all('a'):
+            fine_ref = filter_ref(link, intern_link.get('href'))
+            array_links.append(link)
+    
+
+        if link not in searched_links:
+            searched_links.append(link)
+
+    array_links.pop(0)
+    look_up()
 
 def filter_ref(full_url, ref):
     fine_ref = ""
-
     # NoneType filtering
     if ref is None:
         return ""
@@ -52,19 +72,21 @@ def filter_ref(full_url, ref):
 
 
 def main():
-    #first_url = input("Enter the first url: ")
-    first_url = "http://www.coltec.ufmg.br/coltec-ufmg/"
+    # first_url = input("Enter the first url: ")
+    first_url = "https://www.google.com.br"
     print("Looking up for: " + first_url)
-    r = requests.get(first_url)
-    soup = BeautifulSoup(r.text, 'html.parser')
-    
-    # array_links = []
-    # searched_links = []
+
+    r = urlopen(first_url)
+    r_str = r.read()
+    soup = BeautifulSoup(r_str, 'html.parser')
     
     for link in soup.find_all('a'):
         fine_ref = filter_ref(first_url, link.get('href'))
-        print(fine_ref)
-        
+        array_links.append(fine_ref)
+
+    searched_links.append(first_url)    
+    look_up()
+
 
 if __name__ == "__main__":
     main()
